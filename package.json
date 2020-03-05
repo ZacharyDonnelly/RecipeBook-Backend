@@ -1,15 +1,27 @@
 {
   "name": "Recipe-Book-Backend",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "src/server.ts",
   "repository": "https://github.com/parxyHash/RecipeBook-Backend",
   "author": "Zach Donnelly",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --exec babel-node index.ts"
+    "test": "NODE_ENV=testing jest --forceExit --detectOpenHandles  --silent",
+    "test-routes": "yarn test -t router",
+    "test-models": "yarn test -t model",
+    "test-controllers": "yarn test -t controllers",
+    "test-auth": "yarn test -t Authentication:",
+    "restart": "rimraf dist && yarn build && yarn start",
+    "build": "rimraf ./dist && tsc",
+    "dev": "nodemon --exec node --require ts-node/register ts-node src/index.ts",
+    "debug": "node --inspect=5858 -r ts-node/register ./src/server.ts",
+    "start": "yarn run nodemon exec"
   },
   "dependencies": {
     "bcrypt": "^4.0.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
@@ -18,15 +30,18 @@
     "sequelize": "^5.21.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.7",
-    "@babel/node": "^7.8.7",
-    "@babel/preset-env": "^7.8.7",
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.3",
+    "@types/morgan": "^1.9.0",
     "@types/node": "^13.7.7",
     "@typescript-eslint/eslint-plugin": "^2.22.0",
     "@typescript-eslint/parser": "^2.22.0",
     "eslint": "^6.8.0",
+    "jest": "^25.1.0",
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
+    "rimraf": "^3.0.2",
+    "ts-node": "^8.6.2",
     "typescript": "^3.8.3"
   }
 }

@@ -1,0 +1,17 @@
+{
+  "restartable": "rs",
+  "ignore": [".git", "node_modules/**/node_modules", "dist"],
+  "verbose": true,
+  "execMap": {
+    "ts": "node",
+    "js": "node"
+  },
+
+  "runOnChangeOnly": false,
+  "watch": ["src/**/*.js", "src/**/*.ts", "src/**/*.graphql", "src/**/*.gql"],
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "ext": ".ts,.js, .gql, .graphql",
+  "exec": "ts-node ./src/index.ts babel --extensions '.ts'"
+}
