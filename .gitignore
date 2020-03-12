@@ -73,14 +73,10 @@ typings/
 /config
 
 # database local files
-
-.development.db
-
-.test.db
-
-.production.db
+development.db
+test.db
+production.db
 
 # database models
-
 /models/article*
 
