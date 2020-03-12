@@ -68,19 +68,19 @@ typings/
 # next.js build output
 .next
 
-# database config related
+# database
 .config
 /config
 
-# database local files
 development.db
 test.db
 production.db
 
-# database models
 models/article.*
 /models/article.*
-src/models/article.*
+src/models/article
 /config/*
 *.db
+*db.*
+*Db.*
 

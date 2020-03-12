@@ -1,3 +1,5 @@
+// Model is for testing routes etc
+
 // @ts-ignore
 const Sequelize = require('sequelize');
 
