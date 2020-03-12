@@ -78,5 +78,9 @@ test.db
 production.db
 
 # database models
-/models/article*
+models/article.*
+/models/article.*
+src/models/article.*
+/config/*
+*.db
 
