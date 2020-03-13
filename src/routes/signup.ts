@@ -1,10 +1,10 @@
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 import { requestLogger } from '../middleware';
-dotenv.config();
 
 const sequelize = require('../models').sequelize;
 const { User } = sequelize.models;
+dotenv.config();
 
 module.exports = function(route: string, app: any) {
   app.post(

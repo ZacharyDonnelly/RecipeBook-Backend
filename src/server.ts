@@ -19,6 +19,7 @@ app.use(morgan('dev'));
 
 require('./routes/signup')('/api/user', app);
 require('./routes/login')('/api/auth', app);
+require('./routes/testing')('/api/new-recipe', app);
 require('./routes/testing')('/api/test', app);
 
 export const start = () =>

@@ -76,12 +76,6 @@ development.db
 test.db
 production.db
 
-models/article.*
-/models/article.*
-src/models/article
-models/user.*
-/models/user.*
-src/models/user
 /config/*
 *.db
 *db.*
