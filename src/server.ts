@@ -1,5 +1,6 @@
 import express from 'express';
 import { json, urlencoded } from 'body-parser';
+import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -12,6 +13,7 @@ export const app = express();
 app.disable('x-powered-by');
 app.use(cors());
 app.use(urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(json());
 app.use(morgan('dev'));
 

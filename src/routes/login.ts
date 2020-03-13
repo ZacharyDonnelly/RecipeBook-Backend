@@ -8,7 +8,6 @@ const SECRET = process.env.JWT_SECRET;
 dotenv.config();
 
 module.exports = function(route: string, app: any) {
-  // login auth route
   app.post(
     route,
     async (
@@ -33,7 +32,9 @@ module.exports = function(route: string, app: any) {
             // @ts-ignore
             SECRET,
           );
-          res.send({ token });
+          // ! SET SECURE TO TRUE WHEN YOU GO TO PRODUCTION
+          res.cookie('jwt', token, { httpOnly: true, secure: false, maxAge: 432000 });
+          res.send({ success: true });
         }
       } catch (err) {
         res.status(403);
