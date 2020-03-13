@@ -1,13 +1,16 @@
 // import jwt from('jsonwebtoken');
-// import bcrypt from('bcrypt');
+import bcrypt from 'bcrypt';
 import express from 'express';
 import { json, urlencoded } from 'body-parser';
 import morgan from 'morgan';
 import cors from 'cors';
+import dotenv from 'dotenv';
+dotenv.config();
 const sequelize = require('./models').sequelize; // import Sequelize
-const { Article } = sequelize.models;
 
-const PORT: number = 3000;
+const { Article, User } = sequelize.models;
+
+const PORT = process.env.SERVER_PORT;
 export const app = express();
 
 app.disable('x-powered-by');
@@ -23,33 +26,28 @@ const requestLogger = (req: any, res: any, next: () => void) => {
   console.table([req.body.title, req.body.author, req.body.body]);
   next();
 };
-
 // routes
-app.post(
-  '/api/data',
-  requestLogger,
-  (req: { body: any }, res: { send: (arg0: { success: boolean }) => void }) => {
-    try {
-      res.send({ success: true });
-    } catch (err) {
-      console.error(err);
-      res.send({ success: false });
-    }
-  },
-);
+app.post('/user', async ({ body }, res) => {
+  try {
+    const hashedPassword = await bcrypt.hash(body.hash, 10, async function(err, hash) {
+      const user = await User.create({ email: body.email, hash });
+    });
+  } catch (err) {
+    console.error(err);
+  }
+  res.send({ success: true });
+});
 // development database object creating route test
 app.post(
   '/api/create/test',
-  requestLogger,
   async (
-    req: { body: { title: string; author: string; body: Text } },
+    req: { body: { hash: string; email: string } },
     res: { send: (arg0: { created: boolean }) => void },
   ) => {
     try {
-      await Article.create({
-        title: req.body.title,
-        author: req.body.author,
-        body: req.body.body,
+      await User.create({
+        email: req.body.email,
+        hash: req.body.hash,
       });
       res.send({ created: true });
     } catch (err) {

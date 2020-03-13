@@ -30,7 +30,9 @@
     "sqlite3": "^4.1.1"
   },
   "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
     "@types/cors": "^2.8.6",
+    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.3",
     "@types/morgan": "^1.9.0",
     "@types/node": "^13.7.7",
