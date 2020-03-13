@@ -1,31 +1,40 @@
 import { requestLogger } from '../middleware';
 import dotenv from 'dotenv';
-dotenv.config();
 
 const sequelize = require('../models').sequelize;
-const { Recipe } = sequelize.models;
+const { User } = sequelize.models;
+
+dotenv.config();
 
 module.exports = function(route: string, app: any) {
   app.post(
     route,
     requestLogger,
-    async (req: any, res: { send: (arg0: { created: boolean }) => void }) => {
+    async ({ body }: any, res: { send: (arg0: { created: boolean }) => void }) => {
       try {
-        const newRecipe = await Recipe.create({
-          time: req.body.time,
-          category: req.body.category,
-          ingredients: req.body.ingredients,
+        User.findOne({
+          where: {
+            email: body.email,
+          },
+        }).then((user: any) => {
+          user
+            .createRecipe({
+              time: body.time,
+              category: body.category,
+              ingredients: body.ingredients,
+            })
+            .then(() => console.log('Success!'));
         });
 
-        console.table(newRecipe.toJSON());
+        // console.table(newRecipe.toJSON());
         res.send({ created: true });
       } catch (err) {
         if (err.name === 'SequelizeValidationError') {
           const errors = err.errors.map((error: any) => error.message);
-          console.error('Validation errors: ', errors);
+          return console.error('Validation errors: ', errors);
           res.send({ created: false });
         } else {
-          console.error('Validation errors: ', err);
+          return console.error('Validation errors: ', err);
         }
       }
     },
