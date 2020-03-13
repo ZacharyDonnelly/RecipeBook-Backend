@@ -4,8 +4,9 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import cors from 'cors';
 import dotenv from 'dotenv';
+
 dotenv.config();
-const sequelize = require('./models').sequelize; // import Sequelize
+const sequelize = require('./models').sequelize;
 
 const PORT = process.env.SERVER_PORT;
 export const app = express();
@@ -19,7 +20,7 @@ app.use(morgan('dev'));
 
 require('./routes/signup')('/api/user', app);
 require('./routes/login')('/api/auth', app);
-require('./routes/testing')('/api/new-recipe', app);
+require('./routes/recipe')('/api/new-recipe', app);
 require('./routes/testing')('/api/test', app);
 
 export const start = () =>

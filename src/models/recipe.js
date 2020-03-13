@@ -1,38 +1,36 @@
-// @ts-ignore
-const Sequelize = require('sequelize');
+import * as Sequelize from 'sequelize';
 
-module.exports = sequelize => {
-  class Recipe extends Sequelize.Model {}
-
-  Recipe.init(
-    {
-      bar_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: User,
-          key: 'id',
-        },
-      },
-      category: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-        },
-      },
-      time: {
-        type: Sequelize.STRING,
-      },
-      ingredients: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-        },
+export default sequelize => {
+  const Recipe = sequelize.define('Recipe', {
+    id: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    category: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
       },
     },
-    { sequelize },
-  );
+    time: {
+      type: Sequelize.STRING,
+    },
+    ingredients: {
+      type: Sequelize.TEXT,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    tableName: 'Recipes',
+  });
+  Recipe.associate = models => {
+    models.Recipe.belongsTo(models.User, {
+      onDelete: 'CASCADE',
+    });
+  };
   return Recipe;
 };
