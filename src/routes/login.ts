@@ -12,23 +12,31 @@ module.exports = function(route: string, app: any) {
     route,
     async (
       // @ts-ignore
-      { body },
-      res: any,
+      req: { body: { email: string; password: string } },
+      res: {
+        status: (arg0: number) => void;
+        send: (arg0: { userFound?: boolean; success?: boolean }) => void;
+        cookie: (
+          arg0: string,
+          arg1: string,
+          arg2: { httpOnly: boolean; secure: boolean; maxAge: number },
+        ) => void;
+      },
     ) => {
       try {
         // querying db for specific user to extract hash
         const { hash } = await User.findOne({
           where: {
-            email: body.email,
+            email: req.body.email,
           },
         });
-        const matching = await bcrypt.compare(body.password, hash);
+        const matching = await bcrypt.compare(req.body.password, hash);
         if (!matching) {
           res.status(403);
           res.send({ userFound: false });
         } else {
           const token = await jwt.sign(
-            { email: body.email, issuer: 'dis', expiresIn: '120h' },
+            { email: req.body.email, issuer: 'dis', expiresIn: '120h' },
             // @ts-ignore
             SECRET,
           );

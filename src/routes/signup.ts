@@ -10,15 +10,20 @@ module.exports = function(route: string, app: any) {
   app.post(
     route,
     requestLogger,
-    async ({ body }: any, res: { send: (arg0: { success: boolean }) => void }) => {
+    async (
+      req: { body: { password: string; email: string } },
+      res: { status: (arg0: number) => void; send: (arg0: { success: boolean }) => void },
+    ) => {
       try {
         // salting and hashing password
-        const hashedPassword = await bcrypt.hash(body.password, 10, async function(err, hash) {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10, async function(err, hash) {
           // storing hash
-          const user = await User.create({ email: body.email, hash });
+          const user = await User.create({ email: req.body.email, hash });
         });
+        res.status(200);
         res.send({ success: true });
       } catch (err) {
+        res.status(403);
         res.send({ success: false });
       }
     },

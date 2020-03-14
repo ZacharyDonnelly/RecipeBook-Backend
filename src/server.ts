@@ -8,7 +8,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 const sequelize = require('./models').sequelize;
 
-const PORT = process.env.SERVER_PORT;
+const PORT: string | undefined = process.env.SERVER_PORT;
 export const app = express();
 
 app.disable('x-powered-by');

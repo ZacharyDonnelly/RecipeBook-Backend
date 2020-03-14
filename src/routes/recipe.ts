@@ -9,33 +9,38 @@ dotenv.config();
 module.exports = function(route: string, app: any) {
   app.post(
     route,
-    requestLogger,
-    async ({ body }: any, res: { send: (arg0: { created: boolean }) => void }) => {
+    async (
+      req: { body: { email: string; time: string; category: string; ingredients: string } },
+      res: { status: (arg0: number) => void; send: (arg0: { created: boolean }) => void },
+    ) => {
       try {
         User.findOne({
           where: {
-            email: body.email,
+            email: req.body.email,
           },
-        }).then((user: any) => {
-          user
-            .createRecipe({
-              time: body.time,
-              category: body.category,
-              ingredients: body.ingredients,
-            })
-            .then(() => console.log('Success!'));
-        });
-
-        // console.table(newRecipe.toJSON());
+        }).then(
+          (user: {
+            createRecipe: (arg0: {
+              time: string;
+              category: string;
+              ingredients: string;
+            }) => Promise<string>;
+          }) => {
+            user
+              .createRecipe({
+                time: req.body.time,
+                category: req.body.category,
+                ingredients: req.body.ingredients,
+              })
+              // ! DELETE AT PRODUCTION TIME
+              .then(() => console.log('Success!'));
+          },
+        );
+        res.status(200);
         res.send({ created: true });
       } catch (err) {
-        if (err.name === 'SequelizeValidationError') {
-          const errors = err.errors.map((error: any) => error.message);
-          return console.error('Validation errors: ', errors);
-          res.send({ created: false });
-        } else {
-          return console.error('Validation errors: ', err);
-        }
+        res.status(304);
+        res.send({ created: false });
       }
     },
   );
