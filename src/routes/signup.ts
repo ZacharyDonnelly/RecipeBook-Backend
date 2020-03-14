@@ -12,19 +12,28 @@ module.exports = function(route: string, app: any) {
     requestLogger,
     async (
       req: { body: { password: string; email: string } },
-      res: { status: (arg0: number) => void; send: (arg0: { success: boolean }) => void },
+      res: { status: (arg0: number) => void; send: (arg0: string) => void },
     ) => {
       try {
-        // salting and hashing password
-        const hashedPassword = await bcrypt.hash(req.body.password, 10, async function(err, hash) {
-          // storing hash
-          const user = await User.create({ email: req.body.email, hash });
+        // checking if email already exists in database
+        const emailTaken = await User.findOne({
+          where: {
+            email: req.body.email,
+          },
         });
-        res.status(200);
-        res.send({ success: true });
+        if (emailTaken === null) {
+          // salting and hashing password
+          await bcrypt.hash(req.body.password, 10, async function(err, hash) {
+            // storing hash
+            await User.create({ email: req.body.email, hash });
+          });
+          res.send('User Created');
+        } else {
+          res.send('Email already taken!');
+        }
       } catch (err) {
-        res.status(403);
-        res.send({ success: false });
+        console.error(err);
+        res.send('Email taken');
       }
     },
   );

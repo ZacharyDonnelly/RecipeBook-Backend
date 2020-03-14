@@ -39,7 +39,7 @@ module.exports = function(route: string, app: any) {
         res.status(200);
         res.send({ created: true });
       } catch (err) {
-        res.status(304);
+        res.status(403);
         res.send({ created: false });
       }
     },
