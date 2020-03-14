@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
-import { requestLogger } from '../middleware';
 
 const sequelize = require('../models').sequelize;
 const { User } = sequelize.models;
@@ -9,7 +8,6 @@ dotenv.config();
 module.exports = function(route: string, app: any) {
   app.post(
     route,
-    requestLogger,
     async (
       req: { body: { password: string; email: string } },
       res: { status: (arg0: number) => void; send: (arg0: string) => void },
