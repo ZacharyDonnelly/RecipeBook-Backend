@@ -10,6 +10,13 @@ export default sequelize => {
         autoIncrement: true,
         primaryKey: true,
       },
+      title: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: true,
+        },
+      },
       category: {
         type: Sequelize.STRING,
         allowNull: false,

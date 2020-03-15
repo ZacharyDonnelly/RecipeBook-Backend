@@ -10,7 +10,9 @@ module.exports = function(route: string, app: any) {
   app.post(
     route,
     async (
-      req: { body: { email: string; time: string; category: string; ingredients: string } },
+      req: {
+        body: { email: string; time: string; category: string; ingredients: string; title: string };
+      },
       res: { status: (arg0: number) => void; send: (arg0: { created: boolean }) => void },
     ) => {
       try {
@@ -21,19 +23,18 @@ module.exports = function(route: string, app: any) {
         }).then(
           (user: {
             createRecipe: (arg0: {
+              title: string;
               time: string;
               category: string;
               ingredients: string;
             }) => Promise<string>;
           }) => {
-            user
-              .createRecipe({
-                time: req.body.time,
-                category: req.body.category,
-                ingredients: req.body.ingredients,
-              })
-              // ! DELETE AT PRODUCTION TIME
-              .then(() => console.log('Success!'));
+            user.createRecipe({
+              title: req.body.title,
+              time: req.body.time,
+              category: req.body.category,
+              ingredients: req.body.ingredients,
+            });
           },
         );
         res.status(200);
