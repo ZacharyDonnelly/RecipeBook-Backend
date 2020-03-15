@@ -12,14 +12,18 @@ module.exports = function(route: string, app: any) {
     route,
     async (
       // @ts-ignore
-      req: { body: { email: string; password: string } },
+      req: { body: { email: string; pass: string } },
       res: {
         status: (arg0: number) => void;
-        send: (arg0: { userFound?: boolean; success?: boolean }) => void;
+        send: (arg0: { userFound?: boolean; cookie?: never }) => void;
         cookie: (
           arg0: string,
           arg1: string,
-          arg2: { httpOnly: boolean; secure: boolean; maxAge: number },
+          arg2: {
+            maxAge: number;
+            signed: boolean;
+            secure: true;
+          },
         ) => void;
       },
     ) => {
@@ -30,7 +34,7 @@ module.exports = function(route: string, app: any) {
             email: req.body.email,
           },
         });
-        const matching = await bcrypt.compare(req.body.password, hash);
+        const matching = await bcrypt.compare(req.body.pass, hash);
         if (!matching) {
           res.status(403);
           res.send({ userFound: false });
@@ -41,8 +45,12 @@ module.exports = function(route: string, app: any) {
             SECRET,
           );
           // ! SET SECURE TO TRUE WHEN YOU GO TO PRODUCTION
-          res.cookie('jwt', token, { httpOnly: true, secure: false, maxAge: 432000 });
-          res.send({ success: true });
+          res.cookie('jwt', token, {
+            signed: true,
+            secure: true,
+            maxAge: 432000000,
+          });
+          res.send({ cookie: token });
         }
       } catch (err) {
         res.status(403);

@@ -9,12 +9,13 @@ dotenv.config();
 const sequelize = require('./models').sequelize;
 
 const PORT: string | undefined = process.env.SERVER_PORT;
+const COOKIE_SECRET: string | undefined = process.env.COOKIE_SECRET;
 export const app = express();
 
 app.disable('x-powered-by');
-app.use(cors());
+app.use(cors({ credentials: true }));
 app.use(urlencoded({ extended: true }));
-app.use(cookieParser());
+app.use(cookieParser(COOKIE_SECRET));
 app.use(json());
 app.use(morgan('dev'));
 

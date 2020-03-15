@@ -9,7 +9,7 @@ module.exports = function(route: string, app: any) {
   app.post(
     route,
     async (
-      req: { body: { password: string; email: string } },
+      req: { body: { pass: string; email: string } },
       res: { status: (arg0: number) => void; send: (arg0: string) => void },
     ) => {
       try {
@@ -21,7 +21,7 @@ module.exports = function(route: string, app: any) {
         });
         if (emailTaken === null) {
           // salting and hashing password
-          await bcrypt.hash(req.body.password, 10, async function(err, hash) {
+          await bcrypt.hash(req.body.pass, 10, async function(err, hash) {
             // storing hash
             await User.create({ email: req.body.email, hash });
           });
