@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import { authValidation } from '../middleware/auth';
 import dotenv from 'dotenv';
 
 const sequelize = require('../models').sequelize;
@@ -10,6 +11,7 @@ dotenv.config();
 module.exports = function(route: string, app: any) {
   app.post(
     route,
+    authValidation,
     async (
       // @ts-ignore
       req: { body: { email: string; pass: string } },
@@ -23,11 +25,14 @@ module.exports = function(route: string, app: any) {
             maxAge: number;
             signed: boolean;
             secure: true;
+            httpOnly: true;
           },
         ) => void;
+        locals: any;
       },
     ) => {
       try {
+        console.log('made it here');
         // querying db for specific user to extract hash
         const { hash } = await User.findOne({
           where: {
@@ -46,6 +51,7 @@ module.exports = function(route: string, app: any) {
           );
           // ! SET SECURE TO TRUE WHEN YOU GO TO PRODUCTION
           res.cookie('jwt', token, {
+            httpOnly: true,
             signed: true,
             secure: true,
             maxAge: 432000000,
