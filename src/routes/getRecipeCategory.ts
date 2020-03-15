@@ -7,14 +7,14 @@ module.exports = function(route: string, app: any) {
   app.post(
     route,
     async (
-      req: { body: { email: string } },
+      req: { body: { email: string; category: string } },
       res: {
         status: (
-          arg0: number, // all types for this promise mess
+          arg0: number,
         ) => {
           (): Promise<object>;
           new (): Promise<[]>;
-          send: { (arg0: object[]): void; new (): object[] };
+          send: { (arg0: object[]): void; new (): Promise<[]> };
         };
         send: (arg0: { success: boolean }) => void;
       },
@@ -26,20 +26,21 @@ module.exports = function(route: string, app: any) {
             email: req.body.email,
           },
         }).then((result: { dataValues: { id: number } }) => {
+          // finding all recipes associated with said user AND specific category
+          // ! PAGINATE THESE DURING PRODUCTION
           return Recipe.findAll({
-            // finding all recipes associated with said user
             where: {
               UserId: result.dataValues.id,
+              category: req.body.category,
             },
-          }).then((userRecipes: { dataValues: object }[]) => {
+          }).then((categoryRecipes: { dataValues: object }[]) => {
             // taking all found recipes and mapping them to a
             // ^ new array in order to be returned with the post call
-            const allUserRecipes: object[] = [];
-            userRecipes.forEach(recipe => {
-              allUserRecipes.push(JSON.parse(JSON.stringify(recipe.dataValues)));
+            const allCategoryRecipes: object[] = [];
+            categoryRecipes.forEach(recipe => {
+              allCategoryRecipes.push(JSON.parse(JSON.stringify(recipe.dataValues)));
             });
-            // sending the prettified array back
-            res.status(200).send(allUserRecipes);
+            res.status(200).send(allCategoryRecipes);
           });
         });
       } catch (err) {
