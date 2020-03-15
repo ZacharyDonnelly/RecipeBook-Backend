@@ -23,6 +23,7 @@ require('./routes/signup')('/api/user', app);
 require('./routes/login')('/api/auth', app);
 require('./routes/recipe')('/api/new-recipe', app);
 require('./routes/testing')('/api/test', app);
+require('./routes/getAllRecipes')('/api/get-all', app);
 
 export const start = () =>
   sequelize.sync().then(() => {
