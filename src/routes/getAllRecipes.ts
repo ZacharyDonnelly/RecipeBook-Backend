@@ -1,11 +1,11 @@
-import dotenv from 'dotenv';
-
+import { authValidation } from '../middleware/auth';
 const sequelize = require('../models').sequelize;
 const { Recipe, User } = sequelize.models;
 
 module.exports = function(route: string, app: any) {
   app.post(
     route,
+    authValidation,
     async (
       req: { body: { email: string } },
       res: {
