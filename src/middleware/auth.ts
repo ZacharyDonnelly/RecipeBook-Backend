@@ -26,15 +26,20 @@ export const authValidation = (
       bearer.replace(' ', ''),
       SECRET,
       async (err: any, payload: any) => {
-        console.log(payload.email);
         await User.findOne({
           where: {
             email: payload.email,
           },
-        }).catch((err: any) => {
-          res.status(405);
-          console.error(err);
-        });
+        })
+          .then(() => {
+            if (typeof payload.email !== 'undefined') {
+              next();
+            }
+          })
+          .catch((err: any) => {
+            res.status(405);
+            console.error(err);
+          });
       },
     );
   } catch (err) {
@@ -43,5 +48,4 @@ export const authValidation = (
 
     return;
   }
-  next();
 };

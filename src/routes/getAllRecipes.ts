@@ -21,7 +21,7 @@ module.exports = function(route: string, app: any) {
     ) => {
       try {
         // locating user id
-        await User.findOne({
+        User.findOne({
           where: {
             email: req.body.email,
           },

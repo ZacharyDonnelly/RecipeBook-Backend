@@ -1,4 +1,4 @@
-import { requestLogger } from '../middleware';
+import { authValidation } from '../middleware/auth';
 import dotenv from 'dotenv';
 
 const sequelize = require('../models').sequelize;
@@ -9,6 +9,7 @@ dotenv.config();
 module.exports = function(route: string, app: any) {
   app.post(
     route,
+    authValidation,
     async (
       req: {
         body: { email: string; time: string; category: string; ingredients: string; title: string };
