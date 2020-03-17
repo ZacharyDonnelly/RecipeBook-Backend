@@ -24,6 +24,13 @@ export default sequelize => {
           notEmpty: true,
         },
       },
+      directions: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: true,
+        },
+      },
       time: {
         type: Sequelize.STRING,
       },
