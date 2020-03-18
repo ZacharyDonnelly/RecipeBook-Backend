@@ -29,6 +29,6 @@ require('./routes/getRecipeCategory')('/api/category', app);
 export const start = () =>
   sequelize.sync().then(() => {
     app.listen(PORT, () => {
-      console.log('Server was started on port: 3000');
+      console.log('Server was started on port: 3006');
     });
   });
