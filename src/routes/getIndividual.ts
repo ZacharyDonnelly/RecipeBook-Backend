@@ -1,4 +1,5 @@
 import { authValidation } from '../middleware/auth';
+
 const sequelize = require('../models').sequelize;
 const { Recipe, User } = sequelize.models;
 
@@ -7,39 +8,33 @@ module.exports = function(route: string, app: any) {
     route,
     authValidation,
     async (
-      req: { body: { email: string } },
+      req: { body: { email: string; category: string; id: number } },
       res: {
         status: (
-          arg0: number, // all types for this promise mess
+          arg0: number,
         ) => {
           (): Promise<object>;
           new (): Promise<[]>;
-          send: { (arg0: object[]): void; new (): object[] };
+          send: { (arg0: object[]): void; new (): Promise<[]> };
         };
         send: (arg0: { success: boolean }) => void;
       },
     ) => {
       try {
         // locating user id
-        User.findOne({
+        await User.findOne({
           where: {
             email: req.body.email,
           },
         }).then((result: { dataValues: { id: number } }) => {
-          return Recipe.findAll({
-            // finding all recipes associated with said user
+          const recipes = Recipe.findOne({
             where: {
               UserId: result.dataValues.id,
+              category: req.body.category,
+              id: req.body.id,
             },
-          }).then((userRecipes: { dataValues: object }[]) => {
-            // taking all found recipes and mapping them to a
-            // ^ new array in order to be returned with the post call
-            const allUserRecipes: object[] = [];
-            userRecipes.forEach(recipe => {
-              allUserRecipes.push(JSON.parse(JSON.stringify(recipe.dataValues)));
-            });
-            // sending the prettified array back
-            res.status(200).send(allUserRecipes);
+          }).then((result: object[]) => {
+            res.status(200).send(result);
           });
         });
       } catch (err) {

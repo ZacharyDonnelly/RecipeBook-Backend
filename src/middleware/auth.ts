@@ -33,7 +33,7 @@ export const authValidation = (
         })
           .then(() => {
             if (typeof payload.email !== 'undefined' && payload.email === req.body.email) {
-              next();
+              return next();
             }
           })
           .catch((err: any) => {
