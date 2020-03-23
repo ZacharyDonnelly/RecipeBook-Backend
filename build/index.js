@@ -1,3 +1,3 @@
-"use strict";
-const { start } = require('./server.ts');
+'use strict';
+const { start } = require('./server');
 start();
