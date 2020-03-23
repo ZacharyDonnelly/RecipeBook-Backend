@@ -7,3 +7,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3006:3006
+    volumes:
+      - './app/development.db'
+    environment:
+      - NODE_ENV=development
