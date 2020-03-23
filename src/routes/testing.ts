@@ -1,11 +1,5 @@
-import dotenv from 'dotenv';
 import { requestLogger } from '../middleware';
-dotenv.config();
 
-// const sequelize = require('../models').sequelize;
-// const { User } = sequelize.models;
-
-// route for testing stuffz
 module.exports = function(route: string, app: any) {
   app.get(
     route,

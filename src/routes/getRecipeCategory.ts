@@ -1,3 +1,4 @@
+// @ts-ignore
 import { authValidation } from '../middleware/auth';
 
 const sequelize = require('../models').sequelize;

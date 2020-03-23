@@ -1,15 +1,16 @@
-FROM node:boron
-
-# Create app directory
-RUN mkdir -p /usr/src/app
+FROM node:10.13.0-alpine
+# Create Directory for the Container
 WORKDIR /usr/src/app
+# Only copy the package.json file to work directory
+COPY package.json .
+# Install all Packages
+RUN yarn
+# Copy all other source code to work directory
+# TypeScript
+ADD . /usr/src/app
+RUN yarn run tsc
+# Start
+EXPOSE 3006
+CMD [ "node", "build/index.js" ]
 
-# Install app dependencies
-COPY package.json /usr/src/app/
-RUN npm install
-
-# Bundle app source
-COPY . /usr/src/app
-
-EXPOSE 8080
-CMD [ "npm", "start" ]
+# docker-compose up --build run that to start container
