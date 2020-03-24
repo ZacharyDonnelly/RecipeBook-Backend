@@ -13,4 +13,4 @@ RUN yarn run tsc
 EXPOSE 3006
 CMD [ "node", "build/index.js" ]
 
-# docker-compose up --build run that to start container
+# docker-compose up --build

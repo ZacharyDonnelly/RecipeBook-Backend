@@ -33,7 +33,3 @@ export default sequelize => {
   };
   return User;
 };
-
-// User.associate = models => {
-//   models.User.hasMany(models.Recipe);
-// };

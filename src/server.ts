@@ -22,7 +22,6 @@ app.use(morgan('dev'));
 require('./routes/signup')('/api/user', app);
 require('./routes/login')('/api/auth', app);
 require('./routes/recipe')('/api/new-recipe', app);
-require('./routes/testing')('/api/test', app);
 require('./routes/getAllRecipes')('/api/get-all', app);
 require('./routes/getRecipeCategory')('/api/category', app);
 require('./routes/getIndividual')('/api/recipe', app);

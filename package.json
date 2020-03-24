@@ -16,7 +16,8 @@
     "build": "yarn run tsc",
     "dev": "nodemon --exec node --require ts-node/register ts-node src/index.ts",
     "debug": "node --inspect=5858 -r ts-node/register ./src/server.ts",
-    "start": "node build/index.js"
+    "start": "node build/index.js",
+    "local": "yarn run nodemon exec"
   },
   "dependencies": {
     "bcrypt": "^4.0.1",
