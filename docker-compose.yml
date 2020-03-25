@@ -11,9 +11,10 @@ services:
     depends_on:
       - db
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
   db:
     image: postgres
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=recipes
