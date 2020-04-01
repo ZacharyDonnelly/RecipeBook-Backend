@@ -15,6 +15,10 @@ Deployment: Docker Containers/Docker-compose, AWS EC2 Instance.
 
 <hr />
 
+![Homepage](https://i.imgur.com/O6YcUpW.png)
+
+<hr />
+
 Use the package manager [Yarn](https://yarnpkg.com/lang/en/) to install dependencies.
 
 ```
