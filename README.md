@@ -10,7 +10,13 @@ as my overall development steps. Overall I am very very happy how the MVP turned
 
 ### Stack 
 Back-End: NodeJS, Express, TypeScript, PostgreSQL, Sequelize(ORM).
+
+<br />
+
 Authentication: JWT Cookies, Bcrypt for Hashing/salting. Protected routed based upon active cookie.
+
+<br />
+
 Deployment: Docker Containers/Docker-compose, AWS EC2 Instance.
 
 <hr />
@@ -18,6 +24,10 @@ Deployment: Docker Containers/Docker-compose, AWS EC2 Instance.
 ![Homepage](https://i.imgur.com/O6YcUpW.png)
 
 <hr />
+
+# Usage
+
+## Installation
 
 Use the package manager [Yarn](https://yarnpkg.com/lang/en/) to install dependencies.
 
