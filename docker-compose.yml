@@ -14,9 +14,13 @@ services:
       - NODE_ENV=production
   db:
     image: postgres
-    volumes:
-    - ./data/db:/data/db
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=recipes
+    depends_on:
+      - postgres
+    ports: 
+      - '5432:5432
+     volumes:
+    - ./data/db:/data/db  
