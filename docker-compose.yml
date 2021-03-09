@@ -21,6 +21,6 @@ services:
     depends_on:
       - postgres
     ports: 
-      - '5432:5432
+      - '5432:5432'
     volumes:
     - ./data/db:/data/db
