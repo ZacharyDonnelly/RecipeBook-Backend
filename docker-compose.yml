@@ -8,8 +8,6 @@ services:
     ports:
       - 3006:3006
     env_file: .env
-    depends_on:
-      - db
     environment:
       - NODE_ENV=production
   db:
