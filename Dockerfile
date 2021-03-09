@@ -4,10 +4,10 @@ WORKDIR /usr/src/app
 # Only copy the package.json file to work directory
 COPY package.json .
 # Install all Packages
-RUN yarn
+RUN npm install
 # Copy all other source code to work directory
 # TypeScript
-ADD . /usr/src/app
+COPY . /usr/src/app
 RUN yarn run tsc
 # Start
 EXPOSE 3006
