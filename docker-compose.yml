@@ -22,5 +22,5 @@ services:
       - postgres
     ports: 
       - '5432:5432
-     volumes:
-    - ./data/db:/data/db  
+    volumes:
+    - ./data/db:/data/db
