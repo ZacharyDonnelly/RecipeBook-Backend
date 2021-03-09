@@ -68,15 +68,10 @@ typings/
 # next.js build output
 .next
 
-# database
-.config
-/config
-
 development.db
 test.db
 production.db
 
-/config/*
 *.db
 *db.*
 *Db.*
