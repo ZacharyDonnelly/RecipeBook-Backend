@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 3006:3006
+      - '3006:3006'
     env_file: .env
     environment:
       - NODE_ENV=production
